@@ -20,7 +20,13 @@ else
         sleep 10
         rabbitmqctl stop_app
         rabbitmqctl join_cluster rabbit@$CLUSTER_WITH
+        
+        
         rabbitmqctl start_app
+        if [ ! -z "$HA_POLICY" ]; then
+          eval $(echo "rabbitmqctl set_policy $HA_POLICY") 
+        fi
+        
         fg
     fi
 fi
